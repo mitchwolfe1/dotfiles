@@ -136,3 +136,10 @@ if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
 fi
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Set up nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Optional: Load nvm bash_completion (if you like completions)
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
