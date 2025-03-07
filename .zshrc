@@ -124,6 +124,7 @@ alias envstage='export DOTENV_KEY=$(npx dotenv-vault@latest keys staging)'
 alias envprod='export DOTENV_KEY=$(npx dotenv-vault@latest keys production)'
 alias reboot='sudo shutdown -r now'
 alias vv='source .venv/bin/activate'
+alias box='ssh mitch@rabbit -p 1945'
 
 source $HOME/.zshenv
 eval "$(rbenv init - zsh)"
@@ -146,3 +147,5 @@ export NVM_DIR="$HOME/.nvm"
 
 # Optional: Load nvm bash_completion (if you like completions)
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+bindkey -v
