@@ -125,7 +125,8 @@ alias envprod='export DOTENV_KEY=$(npx dotenv-vault@latest keys production)'
 alias reboot='sudo shutdown -r now'
 alias vv='source .venv/bin/activate'
 alias zz='source ~/.zshrc'
-alias box='ssh mitch@rabbit -p 1945'
+alias box='ssh mitch@rabbit.internal -p 1945'
+alias boxx='ssh mitch@rabbit.external -p 1945'
 
 source $HOME/.zshenv
 eval "$(rbenv init - zsh)"
