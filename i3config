@@ -32,7 +32,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+# exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -41,6 +41,10 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+exec --no-startup-id dbus-launch --exit-with-session i3
+exec --no-startup-id blueman-applet
+exec --no-startup-id sleep 1 && feh --bg-scale ~/.wallpaper/space.png
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -48,14 +52,6 @@ floating_modifier $mod
 # or left-clicking anywhere into the window while holding the floating modifier.
 tiling_drag modifier titlebar
 
-# start a terminal
-bindsym $mod+Return exec kitty
-
-# kill focused window
-bindsym $mod+Shift+q kill
-
-# start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -160,13 +156,13 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
         bindsym h resize shrink width 5 px or 5 ppt
-        bindsym j resize grow height 5 px or 5 ppt
-        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym j resize shrink height 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
         bindsym l resize grow width 5 px or 5 ppt
 
         bindsym Left resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Down resize shrink height 5 px or 5 ppt
+        bindsym Up resize grow height 5 px or 5 ppt
         bindsym Right resize grow width 5 px or 5 ppt
 
         # back to normal: Enter or Escape or $mod+r
@@ -180,9 +176,20 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3blocks -c ~/.config/i3blocks/config
+        font pango:monospace 10
+        tray_output primary 
 }
 
+set $scratch_class KittyScratch
+for_window [class="$scratch_class"] \
+    floating enable, \
+    sticky enable, \
+    resize set 50 ppt 50 ppt, \
+    move position center, \
+    move scratchpad
+bindsym $mod+Shift+Return exec --no-startup-id kitty --class $scratch_class --title "Scratchpad" -o remember_window_size=no
+bindsym $mod+grave [class="$scratch_class"] scratchpad show
 
 bindsym Ctrl+Shift+f exec --no-startup-id firefox -P Work --class Firefox-Work --new-window
 for_window [class="Firefox-Work"] title_format "Work - %title%"
@@ -190,4 +197,13 @@ for_window [class="Firefox-Work"] title_format "Work - %title%"
 bindsym Ctrl+Shift+p exec --no-startup-id firefox -P Personal --class Firefox-Personal --new-window
 for_window [class="Firefox-Personal"] title_format "Personal - %title%"
 
+bindsym $mod+Return exec ~/.local/bin/kitty-with-picom
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
 bindsym Ctrl+Shift+s exec --no-startup-id slack
+bindsym Ctrl+Shift+o exec --no-startup-id spotify 
+bindsym Ctrl+Shift+l exec --no-startup-id i3lock --nofork --color 000000
+bindsym --release Ctrl+Shift+4 exec --no-startup-id ~/.local/bin/grabshot.sh
+bindsym $mod+Shift+t exec --no-startup-id /usr/bin/picom -b
+
+exec --no-startup-id xset r rate 200 40
