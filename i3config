@@ -43,6 +43,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 exec --no-startup-id dbus-launch --exit-with-session i3
 exec --no-startup-id blueman-applet
+exec --no-startup-id xset r rate 200 40
 exec --no-startup-id sleep 1 && feh --bg-scale ~/.wallpaper/space.png
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -178,7 +179,7 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3blocks -c ~/.config/i3blocks/config
         font pango:monospace 10
-        tray_output primary 
+        tray_output DisplayPort-1
 }
 
 set $scratch_class KittyScratch
@@ -206,4 +207,3 @@ bindsym Ctrl+Shift+l exec --no-startup-id i3lock --nofork --color 000000
 bindsym --release Ctrl+Shift+4 exec --no-startup-id ~/.local/bin/grabshot.sh
 bindsym $mod+Shift+t exec --no-startup-id /usr/bin/picom -b
 
-exec --no-startup-id xset r rate 200 40
